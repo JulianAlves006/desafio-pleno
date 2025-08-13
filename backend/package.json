@@ -1,0 +1,22 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "backend do projeto de desafio dev-pleno",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --passWithNoTests",
+    "dev": "nodemon src/server.js"
+  },
+  "author": "julian",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "firebase-admin": "^13.4.0",
+    "nodemon": "^3.1.10"
+  },
+  "devDependencies": {
+    "jest": "^30.0.5"
+  }
+}
