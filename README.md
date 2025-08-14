@@ -9,7 +9,7 @@ Este repositório contém a solução para o desafio técnico de Desenvolvedor P
 
 ### 1. Clonar o repositório
 ```bash
-git clone https://github.com/seu-usuario/seu-repositorio.git](https://github.com/JulianAlves006/desafio-pleno.git
+git clone https://github.com/seu-usuario/seu-repositorio.git]https://github.com/JulianAlves006/desafio-pleno.git
 ````
 
 ---

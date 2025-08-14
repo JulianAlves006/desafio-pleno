@@ -17,8 +17,8 @@ export const getTasks = async (req, res) => {
 export const insertTasks = async (req, res) => {
   try {
     const computerName = os.hostname();
-    const { description, responsable, status } = req.body;
-    const task = { description, responsable, status, computerName };
+    const { description, responsable, status, priority } = req.body;
+    const task = { description, responsable, status, computerName, priority };
     await db.collection("tasks").add(task);
     res.status(200).json({ message: "Task inserted successfully" });
   } catch (error) {

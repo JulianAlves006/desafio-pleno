@@ -8,6 +8,12 @@ function Index() {
     working: 'Em andamento',
     pending: 'Pendente'
   }
+
+  const priority = {
+    high: 'Alta',
+    medium: 'Média',
+    low: 'Baixa'
+  }
   
   const [tasks, setTasks] = useState([])
 
@@ -24,6 +30,7 @@ function Index() {
   const inputDescription = useRef()
   const inputResponsable = useRef()
   const inputStatus = useRef()
+  const inputPriority = useRef()
 
   const insertTask = async (e) => {
     e.preventDefault()
@@ -32,6 +39,7 @@ function Index() {
         description: inputDescription.current.value,
         responsable: inputResponsable.current.value,
         status: inputStatus.current.value,
+        priority: inputPriority.current.value,
       })
       getTasks()
     } catch (error) {
@@ -54,6 +62,7 @@ function Index() {
                 <p>Descrição: {task.description}</p>
                 <p>Responsável: {task.responsable}</p>
                 <p>Status: {status[task.status]}</p>
+                {task.priority && <p>Prioridade: {priority[task.priority]}</p>}
                 <p>Computador: {task.computerName}</p>
               </li>
             )
@@ -72,6 +81,11 @@ function Index() {
           <option value="pending">Pendente</option>
           <option value="working">Em andamento</option>
           <option value="done">Concluído</option>
+        </select>
+        <select ref={inputPriority} defaultValue="">
+          <option value="high">Alta</option>
+          <option value="medium">Média</option>
+          <option value="low">Baixa</option>
         </select>
         <button type='submit'>
           Adicionar tarefa
