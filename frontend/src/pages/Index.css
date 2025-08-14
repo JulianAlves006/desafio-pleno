@@ -71,3 +71,12 @@ input {
   border-radius: 1vh;
   text-align: left;
 }
+
+select {
+  margin-top: 1vh;
+  margin-bottom: 1vh;
+  padding: 1vh;
+  border: 1px solid #000;
+  border-radius: 1vh;
+  text-align: left;
+}

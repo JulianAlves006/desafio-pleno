@@ -35,11 +35,11 @@ describe('Testes de Integração - Fluxos Completos', () => {
 
       const descriptionInput = screen.getByPlaceholderText('Descrição');
       const responsableInput = screen.getByPlaceholderText('Responsável');
-      const statusInput = screen.getByPlaceholderText('Status');
+      const statusInput = screen.getByDisplayValue('Status');
 
       await user.type(descriptionInput, 'Tarefa de integração');
       await user.type(responsableInput, 'Tester');
-      await user.type(statusInput, 'em teste');
+      await user.selectOptions(statusInput, 'Pendente');
 
       // 3. Buscar tarefas novamente - agora com a nova tarefa
       const newTasks = [
@@ -47,7 +47,7 @@ describe('Testes de Integração - Fluxos Completos', () => {
           id: '1',
           description: 'Tarefa de integração',
           responsable: 'Tester',
-          status: 'em teste',
+          status: 'Pendente',
           computerName: 'test-computer'
         }
       ];
@@ -61,7 +61,7 @@ describe('Testes de Integração - Fluxos Completos', () => {
       await waitFor(() => {
         expect(screen.getByText('Descrição: Tarefa de integração')).toBeInTheDocument();
         expect(screen.getByText('Responsável: Tester')).toBeInTheDocument();
-        expect(screen.getByText('Status: em teste')).toBeInTheDocument();
+        expect(screen.getByText('Status: Pendente')).toBeInTheDocument();
       });
 
       // Verificar chamadas da API
@@ -200,12 +200,12 @@ describe('Testes de Integração - Fluxos Completos', () => {
 
       const descriptionInput = screen.getByPlaceholderText('Descrição');
       const responsableInput = screen.getByPlaceholderText('Responsável');
-      const statusInput = screen.getByPlaceholderText('Status');
+      const statusInput = screen.getByDisplayValue('Status');
 
       // Dados válidos
       await user.type(descriptionInput, 'Tarefa válida');
       await user.type(responsableInput, 'João Silva');
-      await user.type(statusInput, 'Em andamento');
+      await user.selectOptions(statusInput, 'Em andamento');
 
       // Verificar que os dados foram inseridos
       expect(descriptionInput.value).toBe('Tarefa válida');
@@ -220,7 +220,7 @@ describe('Testes de Integração - Fluxos Completos', () => {
 
       const descriptionInput = screen.getByPlaceholderText('Descrição');
       const responsableInput = screen.getByPlaceholderText('Responsável');
-      const statusInput = screen.getByPlaceholderText('Status');
+      const statusInput = screen.getByDisplayValue('Status');
 
       // Verificar que os campos começam vazios
       expect(descriptionInput.value).toBe('');
@@ -270,7 +270,7 @@ describe('Testes de Integração - Fluxos Completos', () => {
       await waitFor(() => {
         expect(screen.getByPlaceholderText('Descrição')).toBeInTheDocument();
         expect(screen.getByPlaceholderText('Responsável')).toBeInTheDocument();
-        expect(screen.getByPlaceholderText('Status')).toBeInTheDocument();
+        expect(screen.getByDisplayValue('Status')).toBeInTheDocument();
       });
     });
   });

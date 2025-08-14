@@ -3,25 +3,40 @@ import './Index.css'
 import api from '../services/api'
 
 function Index() {
+  const status = {
+    done: 'Concluído',
+    working: 'Em andamento',
+    pending: 'Pendente'
+  }
+  
   const [tasks, setTasks] = useState([])
 
   const getTasks = async () => {
-    const response = await api.get('/get-tasks')
-    setTasks(response.data)
-    console.log(response)
+    try {
+      const response = await api.get('/get-tasks')
+      setTasks(response.data)
+      console.log(response)
+    } catch (error) {
+      console.error('Erro ao buscar tarefas:', error)
+    }
   }
 
   const inputDescription = useRef()
   const inputResponsable = useRef()
   const inputStatus = useRef()
 
-  const insertTask = async () => {
-
-    await api.post('/insert-task', {
-      description: inputDescription.current.value,
-      responsable: inputResponsable.current.value,
-      status: inputStatus.current.value,
-    })
+  const insertTask = async (e) => {
+    e.preventDefault()
+    try {
+      await api.post('/insert-task', {
+        description: inputDescription.current.value,
+        responsable: inputResponsable.current.value,
+        status: inputStatus.current.value,
+      })
+      getTasks()
+    } catch (error) {
+      console.error('Erro ao inserir tarefa:', error)
+    }
   }
 
   useEffect(() => {
@@ -38,7 +53,7 @@ function Index() {
               <li key={task.id}>
                 <p>Descrição: {task.description}</p>
                 <p>Responsável: {task.responsable}</p>
-                <p>Status: {task.status}</p>
+                <p>Status: {status[task.status]}</p>
                 <p>Computador: {task.computerName}</p>
               </li>
             )
@@ -48,12 +63,17 @@ function Index() {
       <button onClick={() => getTasks()}>
         Buscar tarefas
       </button>
-      <form id='task-form'>
+      <form id='task-form' onSubmit={insertTask}>
         <h1>Adicione sua tarefa!</h1>
         <input type="text" placeholder='Descrição' ref={inputDescription} />
         <input type="text" placeholder='Responsável' ref={inputResponsable} />
-        <input type="text" placeholder='Status' ref={inputStatus} />
-        <button type='submit' onClick={() => insertTask()}>
+        <select ref={inputStatus} defaultValue="">
+          <option value="">Status</option>
+          <option value="pending">Pendente</option>
+          <option value="working">Em andamento</option>
+          <option value="done">Concluído</option>
+        </select>
+        <button type='submit'>
           Adicionar tarefa
         </button>
       </form>

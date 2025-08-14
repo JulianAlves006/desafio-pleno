@@ -32,7 +32,7 @@ describe('Index Component', () => {
       expect(screen.getByText('Adicione sua tarefa!')).toBeInTheDocument();
       expect(screen.getByPlaceholderText('Descrição')).toBeInTheDocument();
       expect(screen.getByPlaceholderText('Responsável')).toBeInTheDocument();
-      expect(screen.getByPlaceholderText('Status')).toBeInTheDocument();
+      expect(screen.getByDisplayValue('Status')).toBeInTheDocument();
       expect(screen.getByText('Adicionar tarefa')).toBeInTheDocument();
     });
 
@@ -145,11 +145,11 @@ describe('Index Component', () => {
 
       const descriptionInput = screen.getByPlaceholderText('Descrição');
       const responsableInput = screen.getByPlaceholderText('Responsável');
-      const statusInput = screen.getByPlaceholderText('Status');
+      const statusInput = screen.getByDisplayValue('Status');
 
       await user.type(descriptionInput, 'Minha tarefa');
       await user.type(responsableInput, 'João Silva');
-      await user.type(statusInput, 'Em andamento');
+      await user.selectOptions(statusInput, 'Em andamento');
 
       expect(descriptionInput.value).toBe('Minha tarefa');
       expect(responsableInput.value).toBe('João Silva');
@@ -165,12 +165,12 @@ describe('Index Component', () => {
 
       const descriptionInput = screen.getByPlaceholderText('Descrição');
       const responsableInput = screen.getByPlaceholderText('Responsável');
-      const statusInput = screen.getByPlaceholderText('Status');
+      const statusInput = screen.getByDisplayValue('Status');
       const submitButton = screen.getByText('Adicionar tarefa');
 
       await user.type(descriptionInput, 'Nova tarefa teste');
       await user.type(responsableInput, 'Testador');
-      await user.type(statusInput, 'teste');
+      await user.selectOptions(statusInput, 'Pendente');
 
       await act(async () => {
         await user.click(submitButton);
@@ -180,7 +180,7 @@ describe('Index Component', () => {
         expect(mockedApi.post).toHaveBeenCalledWith('/insert-task', {
           description: 'Nova tarefa teste',
           responsable: 'Testador',
-          status: 'teste'
+          status: 'Pendente'
         });
       });
     });
@@ -266,7 +266,7 @@ describe('Index Component', () => {
 
       expect(screen.getByPlaceholderText('Descrição')).toBeInTheDocument();
       expect(screen.getByPlaceholderText('Responsável')).toBeInTheDocument();
-      expect(screen.getByPlaceholderText('Status')).toBeInTheDocument();
+      expect(screen.getByDisplayValue('Status')).toBeInTheDocument();
     });
 
     it('deve renderizar lista ordenada para as tarefas', () => {
